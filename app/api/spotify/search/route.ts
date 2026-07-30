@@ -42,17 +42,7 @@ expiresAt = Date.now() + data.expires_in * 1000;
 
 return accessToken;
 
-  console.log("SPOTIFY TOKEN RESPONSE:");
-  console.log(data);
 
-  if (!response.ok) {
-    throw new Error(JSON.stringify(data));
-  }
-
-  accessToken = data.access_token;
-  expiresAt = Date.now() + data.expires_in * 1000;
-
-  return accessToken;
 }
 
 export async function GET(request: NextRequest) {
@@ -78,24 +68,13 @@ console.log("TOKEN:", token);
     }
   );
 
-const text = await spotify.text();
+const data = await spotify.json();
 
 console.log("SEARCH RESPONSE:");
-console.log(text);
-
-return new NextResponse(text, {
-  status: spotify.status,
-  headers: {
-    "Content-Type": "text/plain",
-  },
-});
-
-console.log("TOKEN RESPONSE:");
 console.log(data);
 
 if (!spotify.ok) {
   return NextResponse.json(data, { status: spotify.status });
-}  
-
-  return NextResponse.json(data);
 }
+
+return NextResponse.json(data);
