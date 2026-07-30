@@ -78,3 +78,4 @@ if (!spotify.ok) {
 }
 
 return NextResponse.json(data);
+}
